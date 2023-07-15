@@ -7,22 +7,25 @@ import java.util.PriorityQueue;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     static class Prisoner {
-        Prisoner(int n,int l){
+        Prisoner(int n,ArrayList<Integer> boxListToCheck){
             number = n;
             boxToCheck = n;
-            boxesNumbersToCheck = new ArrayList<Integer>();
-            for(int ii = 0; ii<l; ii++){
-                boxesNumbersToCheck.add(ii);
-            }
+            boxesNumbersToCheck = boxListToCheck;
         }
         public int number;
         public int boxToCheck;
         public List<Integer> boxesNumbersToCheck;
         
         public static List<Prisoner> getPrisonerList(int l){
+
+            var boxesNumbersToCheckListToCopy = new ArrayList<Integer>();
+            for(int ii = 0; ii<l; ii++){
+                boxesNumbersToCheckListToCopy.add(ii);
+            }
+
             var prionsersList = new ArrayList<Prisoner>();
             for(int i = 1; i<=l;i++){
-                prionsersList.add(new Prisoner(i,l));
+                prionsersList.add(new Prisoner(i,(ArrayList)boxesNumbersToCheckListToCopy.clone()));
 
             }
             return prionsersList;
@@ -110,7 +113,8 @@ public class Main {
 
     public static void main(String[] args) {
         int numberOfTries = 10000000;
-        int tryPerPercent = 0;
+        int numberOfPrisoners = 100;
+        int tryPerPercent = numberOfTries/100;
 
 
         System.out.println("");
@@ -121,7 +125,7 @@ public class Main {
         tryPerPercent = 0;
         int randomSuccess = 0;
         for(int x = 1;x<numberOfTries;x++){
-            if(isRandomSimulationCorrect(Prisoner.getPrisonerList(100),Box.getBoxWithNumbersList(100))) randomSuccess++;
+            if(isRandomSimulationCorrect(Prisoner.getPrisonerList(numberOfPrisoners),Box.getBoxWithNumbersList(numberOfPrisoners))) randomSuccess++;
 
             if(tryPerPercent == 0) {
                 System.out.print("#");
@@ -141,7 +145,7 @@ public class Main {
         tryPerPercent = 0;
         int methodSuccess = 0;
         for(int x = 1;x<numberOfTries;x++){
-            if(isMethodSimulationCorrect(Prisoner.getPrisonerList(100),Box.getBoxWithNumbersList(100))) methodSuccess++;
+            if(isMethodSimulationCorrect(Prisoner.getPrisonerList(numberOfPrisoners),Box.getBoxWithNumbersList(numberOfPrisoners))) methodSuccess++;
 
             if(tryPerPercent == 0) {
                 System.out.print("#");
