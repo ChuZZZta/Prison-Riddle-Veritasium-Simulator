@@ -112,40 +112,17 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int numberOfTries = 10000000;
+        int numberOfTries = 100;
         int numberOfPrisoners = 100;
         int tryPerPercent = numberOfTries/100;
-
-
-        System.out.println("");
-        System.out.println("------");
-        System.out.println("");
-
-
-        tryPerPercent = 0;
         int randomSuccess = 0;
-        for(int x = 1;x<numberOfTries;x++){
-            if(isRandomSimulationCorrect(Prisoner.getPrisonerList(numberOfPrisoners),Box.getBoxWithNumbersList(numberOfPrisoners))) randomSuccess++;
-
-            if(tryPerPercent == 0) {
-                System.out.print("#");
-                tryPerPercent = numberOfTries/100;
-            }
-            tryPerPercent--;
-
-        }
-        System.out.print(" - Success rate random: ");
-        System.out.print(randomSuccess*100/numberOfTries);
-
-        System.out.println("");
-        System.out.println("------");
-        System.out.println("");
-
-
-        tryPerPercent = 0;
         int methodSuccess = 0;
+
         for(int x = 1;x<numberOfTries;x++){
-            if(isMethodSimulationCorrect(Prisoner.getPrisonerList(numberOfPrisoners),Box.getBoxWithNumbersList(numberOfPrisoners))) methodSuccess++;
+            var prisonersList = Prisoner.getPrisonerList(numberOfPrisoners);
+            var boxList = Box.getBoxWithNumbersList(numberOfPrisoners);
+            if(isRandomSimulationCorrect(prisonersList,boxList)) randomSuccess++;
+            if(isMethodSimulationCorrect(prisonersList,boxList)) methodSuccess++;
 
             if(tryPerPercent == 0) {
                 System.out.print("#");
@@ -154,12 +131,10 @@ public class Main {
             tryPerPercent--;
 
         }
-        System.out.print(" - Success rate method: ");
-        System.out.print(methodSuccess*100/numberOfTries);
-
-
-        System.out.println("");
-        System.out.println("------");
-        System.out.println("");
+        System.out.println("  ");
+        System.out.println(" - Success rate random: ");
+        System.out.println(randomSuccess*100.0/numberOfTries);
+        System.out.println(" - Success rate random: ");
+        System.out.println(methodSuccess*100.0/numberOfTries);
     }
 }
